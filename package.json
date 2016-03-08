@@ -63,6 +63,7 @@
     "webpack": "^1.12.13"
   },
   "dependencies": {
-    "immutable": "^3.7.6"
+    "immutable": "^3.7.6",
+    "redux-state": "^0.1.1"
   }
 }
