@@ -25,7 +25,7 @@ describe(`redux-uniform`, () => {
             })
 
             const result = mapType(fields)(fieldPaths, undefined, state)
-            expect(result.getIn([ `fields`, `foo`, `value` ])).toEqual(`bar`)
+            expect(result.getIn([ `map`, `foo`, `value` ])).toEqual(`bar`)
             expect(result.get(`valid`)).toBeTruthy()
         })
 
@@ -40,7 +40,7 @@ describe(`redux-uniform`, () => {
 
             const fieldPaths = [ `fields` ]
             const state = Map({
-                fields: Map({
+                map: Map({
                     foo: Map({
                         value: `bar`
                     })
@@ -49,6 +49,41 @@ describe(`redux-uniform`, () => {
 
             const result = mapType(fields)(fieldPaths, undefined, state)
             expect(result.get(`valid`)).toBeFalsy()
+        })
+
+        it(`should do switch between field types`, () => {
+            const fields = {
+                type: fieldType(),
+                fields: {
+                    [map => map.getIn([ `type`, `value` ]) === `bar`]: mapType({
+                        bar: fieldType()
+                    }),
+                    [map => map.get([ `type`, `value` ]) === `baz`]: mapType({
+                        baz: fieldType()
+                    })
+                }
+            }
+            const fieldPath = [ `foo` ]
+            const state = Map({
+                foo: Map({
+                    map: Map({
+                        type: Map({
+                            value: `bar`
+                        }),
+                        fields: Map({
+                            bar: Map({
+                                value: true
+                            })
+                        })
+                    })
+                })
+            })
+
+            const map = mapType(fields)
+
+            expect(map(fieldPath, undefined, state).getIn([ `map`, `fields`, `map`, `bar` ]))
+                .toBeTruthy()
+
         })
     })
 })

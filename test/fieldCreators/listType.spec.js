@@ -241,7 +241,7 @@ describe(`redux-uniform`, () => {
                     })
                 })
 
-                expect(list(fieldPath, undefined, state).getIn([ `list`, 0, `fields`, `foo`, `value` ]))
+                expect(list(fieldPath, undefined, state).getIn([ `list`, 0, `map`, `foo`, `value` ]))
                     .toEqual(`bar`)
             })
         })

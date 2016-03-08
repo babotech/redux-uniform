@@ -25,7 +25,7 @@ describe(`redux-uniform`, () => {
             })
 
             const result = composeFields(fields, fieldPaths, state)
-            expect(result.getIn([ `fields`, `foo`, `value` ])).toEqual(`bar`)
+            expect(result.getIn([ `map`, `foo`, `value` ])).toEqual(`bar`)
             expect(result.get(`valid`)).toBeTruthy()
         })
 
@@ -40,7 +40,7 @@ describe(`redux-uniform`, () => {
 
             const fieldPaths = [ `fields` ]
             const state = Map({
-                fields: Map({
+                map: Map({
                     foo: Map({
                         value: `bar`
                     })
