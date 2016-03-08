@@ -101,5 +101,16 @@ describe(`redux-uniform`, () => {
                     })
                 }))
         })
+
+        it(`should transform from primitive`, () => {
+            const data = `bar`
+
+            expect(transformToState(data))
+                .toEqualImmutable(Map({
+                    initial: `bar`,
+                    value: `bar`,
+                    validating: false
+                }))
+        })
     })
 })
