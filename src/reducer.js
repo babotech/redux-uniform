@@ -45,7 +45,7 @@ const formReducer = (state = initialState, action = {}) => {
 
                 if (action.result.focused) {
                     state = state.set(`focusedFieldPath`, List([ ...action.result.fieldPath,
-                        typeof action.result.index === `undefined` ? state.getIn([`fields`, ...action.result.fieldPath]).size - 1 : action.result.index]))
+                        typeof action.result.index === `undefined` ? state.getIn([ `fields`, ...action.result.fieldPath ]).size - 1 : action.result.index ]))
                 }
                 return state
             }

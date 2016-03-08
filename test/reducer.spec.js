@@ -1,5 +1,5 @@
 import * as actionTypes from '../src/actionTypes'
-import {List, Map, fromJS} from 'immutable'
+import {Map, fromJS} from 'immutable'
 
 import expect from 'expect'
 import expectImmutable from 'expect-immutable'
@@ -157,7 +157,7 @@ describe(`redux-uniform`, () => {
                         data
                     ]
                 },
-                focusedFieldPath: [ `foos` , 0 ]
+                focusedFieldPath: [ `foos`, 0 ]
             }))
         })
 
