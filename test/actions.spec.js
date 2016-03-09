@@ -2,27 +2,61 @@ import * as actionTypes from '../src/actionTypes'
 import * as actions from '../src/actions'
 
 import expect from 'expect'
+import mockery from 'mockery'
 import rndoam from 'rndoam'
 
 describe(`redux-uniform`, () => {
-    
+
     describe(`actions`, () => {
-        
+
+        const getMockedActions = ({transformToState}) => {
+            mockery.enable({
+                warnOnUnregistered: false,
+                useCleanCache: true
+            })
+
+            mockery.registerMock(`./transformToState`, transformToState)
+
+            const mockedActions = require(`../src/actions`)
+
+            mockery.disable()
+            mockery.deregisterAll()
+
+            return mockedActions
+        }
+
         it(`should create initialize action`, () => {
             const data = rndoam.object()
-    
-            expect(actions.initialize(data)).toEqual({
+            const transformedData = rndoam.object()
+            const transformToState = expect.createSpy()
+                .andReturn(transformedData)
+
+            const {initialize} = getMockedActions({
+                transformToState
+            })
+
+            expect(initialize(data)).toEqual({
                 type: actionTypes.INITIALIZE,
                 result: {
-                    data
+                    data: transformedData
                 }
             })
+
+            expect(transformToState.calls.length)
+                .toEqual(1)
+
+            const {arguments: args} = transformToState.calls[0]
+
+            expect(args)
+                .toEqual([
+                    data
+                ])
         })
-    
+
         it(`should create change action`, () => {
             const fieldPath = rndoam.array()
             const value = rndoam.string()
-    
+
             expect(actions.change(fieldPath, value)).toEqual({
                 type: actionTypes.CHANGE,
                 result: {
@@ -31,11 +65,11 @@ describe(`redux-uniform`, () => {
                 }
             })
         })
-    
+
         it(`should create validate action`, () => {
             const fieldPath = rndoam.array()
             const value = rndoam.string()
-    
+
             expect(actions.validate(fieldPath, value)).toEqual({
                 type: actionTypes.VALIDATE,
                 result: {
@@ -44,7 +78,7 @@ describe(`redux-uniform`, () => {
                 }
             })
         })
-    
+
         it(`should begin validation process if value is a promise`, (done) => {
             const fieldPath = rndoam.array()
             const dispatch = expect.createSpy()
@@ -53,7 +87,7 @@ describe(`redux-uniform`, () => {
 
             expect(dispatch.calls.length).toEqual(1)
 
-            expect(dispatch.calls[0].arguments).toEqual([
+            expect(dispatch.calls[ 0 ].arguments).toEqual([
                 {
                     type: actionTypes.START_VALIDATION,
                     result: {
@@ -65,7 +99,7 @@ describe(`redux-uniform`, () => {
             setTimeout(() => {
                 const expectedCallsCount = 2
                 expect(dispatch.calls.length).toEqual(expectedCallsCount)
-                expect(dispatch.calls[1].arguments).toEqual([
+                expect(dispatch.calls[ 1 ].arguments).toEqual([
                     {
                         type: actionTypes.END_VALIDATION,
                         result: {
@@ -77,29 +111,46 @@ describe(`redux-uniform`, () => {
                 done()
             }, 0)
         })
-    
+
         it(`should create action for creation of a new item`, () => {
             const fieldPath = rndoam.array()
             const data = rndoam.object()
+            const transformedData = rndoam.object()
             const index = rndoam.number()
             const focused = true
-    
-            expect(actions.addField(fieldPath, data, index, focused))
+
+            const transformToState = expect.createSpy()
+                .andReturn(transformedData)
+
+            const {addField} = getMockedActions({transformToState})
+
+
+            expect(addField(fieldPath, data, index, focused))
                 .toEqual({
                     type: actionTypes.ADD,
                     result: {
                         fieldPath,
-                        data,
+                        data: transformedData,
                         index,
                         focused
                     }
                 })
+
+            expect(transformToState.calls.length)
+                .toEqual(1)
+
+            const {arguments: args} = transformToState.calls[0]
+
+            expect(args)
+                .toEqual([
+                    data
+                ])
         })
-    
+
         it(`should create action for removing of a item`, () => {
             const fieldPath = rndoam.array()
             const index = rndoam.number()
-    
+
             expect(actions.removeField(fieldPath, index))
                 .toEqual({
                     type: actionTypes.REMOVE,
@@ -109,11 +160,11 @@ describe(`redux-uniform`, () => {
                     }
                 })
         })
-    
+
         it(`should create action for changing position of a caret`, () => {
             const fieldPath = rndoam.array()
             const caretPosition = [ rndoam.number(), rndoam.number() ]
-    
+
             expect(actions.changeCaretPosition(fieldPath, caretPosition))
                 .toEqual({
                     type: actionTypes.CHANGE_CARET_POSITION,
@@ -123,7 +174,7 @@ describe(`redux-uniform`, () => {
                     }
                 })
         })
-    
+
         it(`should create action for a focus event`, () => {
             const fieldPath = rndoam.array()
             expect(actions.focus(fieldPath))
@@ -134,14 +185,14 @@ describe(`redux-uniform`, () => {
                     }
                 })
         })
-    
+
         it(`should create action for a blur event`, () => {
             expect(actions.blur())
                 .toEqual({
                     type: actionTypes.BLUR
                 })
         })
-    
+
         it(`should process submit`, (done) => {
             const dispatch = expect.createSpy()
 
@@ -149,7 +200,7 @@ describe(`redux-uniform`, () => {
 
             expect(dispatch.calls.length).toEqual(1)
 
-            expect(dispatch.calls[0].arguments).toEqual([
+            expect(dispatch.calls[ 0 ].arguments).toEqual([
                 {
                     type: actionTypes.START_SUBMITTING
                 }
@@ -158,7 +209,7 @@ describe(`redux-uniform`, () => {
             setTimeout(() => {
                 const expectedCallsCount = 2
                 expect(dispatch.calls.length).toEqual(expectedCallsCount)
-                expect(dispatch.calls[1].arguments).toEqual([
+                expect(dispatch.calls[ 1 ].arguments).toEqual([
                     {
                         type: actionTypes.END_SUBMITTING
                     }

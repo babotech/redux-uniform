@@ -13,10 +13,12 @@ import {
     VALIDATE
 } from './actionTypes'
 
+import transformToState from './transformToState'
+
 export const initialize = data => ({
     type: INITIALIZE,
     result: {
-        data
+        data: transformToState(data)
     }
 })
 
@@ -61,7 +63,7 @@ export const addField = (fieldPath, data, index, focused = false) => ({
     type: ADD,
     result: {
         fieldPath,
-        data,
+        data: transformToState(data),
         index,
         focused
     }
