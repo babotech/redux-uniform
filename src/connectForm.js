@@ -5,6 +5,7 @@ import React, {Component} from 'react'
 import {bindActionCreators} from 'redux'
 import composeFields from './composeFields'
 import {connectState} from 'redux-state'
+import extractValues from './extractValues'
 import reducer from './reducer'
 
 const mapStateToProps = state => ({
@@ -22,10 +23,14 @@ const createFormProps = (fields, inst) => {
     const valid = composeResult.get(`valid`)
     const submitting = state.get(`submitting`)
     const submitAllowed = !submitting && valid
+    const getValues = () => extractValues(composeResult.get(`map`))
+    const handleSubmit = (sendValues) => submit(sendValues(getValues()))
+
 
     return {
         fields: formFields,
-        submit,
+        getValues,
+        handleSubmit,
         submitAllowed,
         submitting,
         valid
@@ -41,7 +46,6 @@ const connectForm = fields => Target => {
         }
 
         render() {
-
             return <Target {...createFormProps(fields, this)} />
         }
     }

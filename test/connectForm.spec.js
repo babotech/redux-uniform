@@ -44,13 +44,14 @@ describe(`redux-uniform`, () => {
             store: PropTypes.object.isRequired
         }
 
-        const getMockedConnectForm = ({actions}) => {
+        const getMockedConnectForm = ({actions, extractValues}) => {
             mockery.enable({
                 warnOnUnregistered: false,
                 useCleanCache: true
             })
 
             mockery.registerMock(`./formActions`, actions)
+            mockery.registerMock(`./extractValues`, extractValues)
 
             const {default: mockedConnectForm} = require(`../src/connectForm`)
 
@@ -189,12 +190,16 @@ describe(`redux-uniform`, () => {
                 .toEqual(true)
         })
 
-        it(`should provide submit action into a wrapped component`, () => {
+        it(`should provide handleSubmit method into a wrapped component`, () => {
             const submitSpy = expect
                 .spyOn(formActions, `submit`)
                 .andCallThrough()
 
             const store = createStoreWithForm()
+
+            const promise = Promise.resolve()
+            const sendValues = expect.createSpy()
+                .andReturn(promise)
 
             class Container extends Component {
                 render() {
@@ -213,12 +218,11 @@ describe(`redux-uniform`, () => {
 
                 const passthrough = TestUtils.findRenderedComponentWithType(tree, Passthrough)
 
-                const {submit} = passthrough.props
+                const {handleSubmit} = passthrough.props
 
-                expect(submit).toExist()
+                expect(handleSubmit).toExist()
 
-                const promise = Promise.resolve()
-                submit(promise)
+                handleSubmit(sendValues)
 
                 expect(submitSpy.calls.length).toEqual(1)
 
@@ -256,6 +260,29 @@ describe(`redux-uniform`, () => {
 
             expect(passthrough.props.submitAllowed)
                 .toEqual(false)
+        })
+
+        it(`should provide getValues method into a wrapped component`, () => {
+            const store = createStoreWithForm()
+
+            class Container extends Component {
+                render() {
+                    return <Passthrough {...this.props} />
+                }
+            }
+
+            const ContainerForm = connectForm()(Container)
+
+            const tree = TestUtils.renderIntoDocument(
+                <ProviderMock store={store}>
+                    <ContainerForm />
+                </ProviderMock>
+            )
+
+            const passthrough = TestUtils.findRenderedComponentWithType(tree, Passthrough)
+
+            expect(passthrough.props.getValues)
+                .toExist()
         })
     })
 })
