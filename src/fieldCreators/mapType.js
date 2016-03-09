@@ -9,17 +9,27 @@ const map = Map({
 const composeSwitch = (accumulator, switchField) => {
     for (const predictor in switchField) {
         if (eval(`(${predictor})`)(accumulator.get(`map`))) {
-            return switchField[predictor]
+            return switchField[ predictor ]
         }
     }
 
-    throw new Error(`Field not found`)
+    return undefined
 }
 
 const mapType = fields => (fieldPath, fieldsPath, state, props) =>
     Object.keys(fields)
         .reduce((acc, key) => {
-            const field = (typeof fields[key] === `function` ? fields[key] : composeSwitch(acc, fields[key]))([ ...fieldPath, `map`, key ], fieldsPath, state, props)
+            let fieldCreator
+            if (typeof fields[ key ] === `function`) {
+                fieldCreator = fields[ key ]
+            } else {
+                fieldCreator = composeSwitch(acc, fields[ key ])
+                if (!fieldCreator) {
+                    return acc
+                }
+            }
+
+            const field = fieldCreator([ ...fieldPath, `map`, key ], fieldsPath, state, props)
             return acc
                 .setIn([ `map`, key ], field)
                 .update(`valid`, v => v && field.get(`valid`))
