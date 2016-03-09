@@ -1,5 +1,5 @@
 import * as actionTypes from '../src/actionTypes'
-import * as actions from '../src/actions'
+import * as actions from '../src/formActions'
 
 import expect from 'expect'
 import mockery from 'mockery'
@@ -17,7 +17,7 @@ describe(`redux-uniform`, () => {
 
             mockery.registerMock(`./transformToState`, transformToState)
 
-            const mockedActions = require(`../src/actions`)
+            const mockedActions = require(`../src/formActions`)
 
             mockery.disable()
             mockery.deregisterAll()

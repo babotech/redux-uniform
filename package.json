@@ -59,6 +59,8 @@
     "react-addons-test-utils": "^0.14.7",
     "react-contextify": "^0.1.0",
     "react-dom": "^0.14.7",
+    "react-redux": "^4.4.0",
+    "redux": "^3.3.1",
     "rndoam": "^0.1.0",
     "webpack": "^1.12.13"
   },

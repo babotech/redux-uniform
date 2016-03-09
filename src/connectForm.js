@@ -1,11 +1,11 @@
-import * as actions from './actions'
+import * as actions from './formActions'
 
 import React, {Component} from 'react'
 
 import {bindActionCreators} from 'redux'
 import composeFields from './composeFields'
 import {connectState} from 'redux-state'
-import reducer from 'reducer'
+import reducer from './reducer'
 
 const mapStateToProps = state => ({
     state
@@ -14,6 +14,23 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     ...bindActionCreators(actions, dispatch)
 })
+
+const createFormProps = (fields, inst) => {
+    const {state, submit} = inst.props
+    const composeResult = composeFields(fields, [ `fields` ], state, inst.props)
+    const formFields = composeResult.get(`map`).toJS()
+    const valid = composeResult.get(`valid`)
+    const submitting = state.get(`submitting`)
+    const submitAllowed = !submitting && valid
+
+    return {
+        fields: formFields,
+        submit,
+        submitAllowed,
+        submitting,
+        valid
+    }
+}
 
 const connectForm = fields => Target => {
     class ConnectForm extends Component {
@@ -24,12 +41,8 @@ const connectForm = fields => Target => {
         }
 
         render() {
-            const {state} = this.props
-            const composeResult = composeFields(fields, [ `fields` ], state, this.props)
-            const formFields = composeResult.get(`map`).toJS()
-            const valid = composeResult.get(`valid`)
 
-            return <Target fields={formFields} valid={valid} />
+            return <Target {...createFormProps(fields, this)} />
         }
     }
 
