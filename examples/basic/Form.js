@@ -37,10 +37,7 @@ export default connectForm({
 })(Form)
 
 const container = {
-    width: `640px`,
-    margin: `auto`,
-    display: `flex`,
-    paddingTop: `100px`
+    display: `flex`
 }
 
 const form = {}
