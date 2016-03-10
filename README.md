@@ -127,10 +127,10 @@ const fields = {
         list: [
             {
                 dirty: Boolean,
-                        value: Any,
-                        initial: Any,
-                        valid: Boolean,
-                        validating: Boolean
+                value: Any,
+                initial: Any,
+                valid: Boolean,
+                validating: Boolean
             }
         ]
     }
