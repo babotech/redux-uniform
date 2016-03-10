@@ -85,5 +85,31 @@ describe(`redux-uniform`, () => {
                 .toBeTruthy()
 
         })
+
+        it(`should not include field if not switch cases matched`, () => {
+            const fields = {
+                type: fieldType(),
+                fields: {
+                    [map => map.getIn([ `type`, `value` ]) === `bar` ]: mapType({
+                        bar: fieldType()
+                    })
+                }
+            }
+            const fieldPath = [ `foo` ]
+            const state = Map({
+                foo: Map({
+                    map: Map({
+                        type: Map({
+                            value: `baz`
+                        })
+                    })
+                })
+            })
+
+            const map = mapType(fields)
+
+            expect(map(fieldPath, undefined, state).getIn([ `map`, `fields` ]))
+                .toNotExist()
+        })
     })
 })
