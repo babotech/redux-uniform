@@ -26,9 +26,11 @@ describe(`redux-uniform`, () => {
         it(`should extract values from array`, () => {
             const fields = fromJS({
                 field: {
-                    list: [ {
-                        value: `value`
-                    } ]
+                    list: [
+                        {
+                            value: `value`
+                        }
+                    ]
                 }
             })
 
@@ -45,11 +47,13 @@ describe(`redux-uniform`, () => {
                 field: {
                     list: [
                         {
-                            field1: {
-                                value: `value1`
-                            },
-                            field2: {
-                                value: `value2`
+                            map: {
+                                field1: {
+                                    value: `value1`
+                                },
+                                field2: {
+                                    value: `value2`
+                                }
                             }
                         }
                     ]
