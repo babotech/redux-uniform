@@ -109,5 +109,15 @@ describe(`redux-uniform`, () => {
                     validating: false
                 }))
         })
+
+        it(`should transform null`, () => {
+            const data = null
+            expect(transformToState(data))
+                .toEqualImmutable(Map({
+                    initial: null,
+                    value: null,
+                    validating: false
+                }))
+        })
     })
 })
