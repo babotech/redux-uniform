@@ -67,6 +67,6 @@
   },
   "dependencies": {
     "immutable": "^3.7.6",
-    "redux-state": "0.1.4"
+    "redux-state": "0.1.5"
   }
 }

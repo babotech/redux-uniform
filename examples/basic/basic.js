@@ -8473,7 +8473,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
-	exports.reducer = exports.connectForm = exports.FieldTypes = undefined;
+	exports.reducer = exports.uniform = exports.FieldTypes = undefined;
 
 	var _fieldCreators = __webpack_require__(125);
 
@@ -8488,12 +8488,12 @@
 	var _formReducer2 = _interopRequireDefault(_formReducer);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
-	exports.FieldTypes = _fieldCreators2["default"];
-	exports.connectForm = _connectForm2["default"];
-	exports.reducer = _formReducer2["default"];
+	exports.FieldTypes = _fieldCreators2.default;
+	exports.uniform = _connectForm2.default;
+	exports.reducer = _formReducer2.default;
 
 /***/ },
 /* 26 */
@@ -9477,7 +9477,7 @@
 	var _createOnFocus2 = _interopRequireDefault(_createOnFocus);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
 	function _toConsumableArray(arr) {
@@ -9526,14 +9526,14 @@
 	            dirty: !!fieldState && fieldState.get('value') !== fieldState.get('initialValue'),
 	            caretPosition: focused ? state.get('caretPosition') : (0, _immutable.List)(),
 	            valid: validate(options, fieldState ? fieldState.get('value') : undefined),
-	            onChange: (0, _createOnChange2["default"])(fieldPath, props.change, props.changeCaretPosition),
-	            onBlur: (0, _createOnBlur2["default"])(props.blur),
-	            onFocus: (0, _createOnFocus2["default"])(fieldPath, props.focus)
+	            onChange: (0, _createOnChange2.default)(fieldPath, props.change, props.changeCaretPosition),
+	            onBlur: (0, _createOnBlur2.default)(props.blur),
+	            onFocus: (0, _createOnFocus2.default)(fieldPath, props.focus)
 	        });
 	    };
 	};
 
-	exports["default"] = fieldType;
+	exports.default = fieldType;
 
 /***/ },
 /* 37 */
@@ -9594,7 +9594,7 @@
 	    };
 	};
 
-	exports["default"] = mapType;
+	exports.default = mapType;
 
 /***/ },
 /* 38 */
@@ -11710,7 +11710,7 @@
 	var _isEvent2 = _interopRequireDefault(_isEvent);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
 	var getSelectedValues = function getSelectedValues(options) {
@@ -11727,7 +11727,7 @@
 	};
 
 	var getValue = function getValue(event) {
-	    if ((0, _isEvent2["default"])(event)) {
+	    if ((0, _isEvent2.default)(event)) {
 	        var _event$target = event.target;
 	        var type = _event$target.type;
 	        var value = _event$target.value;
@@ -11750,7 +11750,7 @@
 	    return event && (typeof event === 'undefined' ? 'undefined' : _typeof(event)) === 'object' && event.value !== undefined ? event.value : event;
 	};
 
-	exports["default"] = getValue;
+	exports.default = getValue;
 
 /***/ },
 /* 60 */
@@ -16434,6 +16434,8 @@
 	    var getValues = _ref.getValues;
 	    var submitAllowed = _ref.submitAllowed;
 	    var handleSubmit = _ref.handleSubmit;
+
+
 	    return _react2.default.createElement(
 	        'div',
 	        { style: container },
@@ -16454,7 +16456,7 @@
 	    );
 	};
 
-	exports.default = (0, _lib.connectForm)({
+	exports.default = (0, _lib.uniform)({
 	    firstName: _lib.FieldTypes.field(_required2.default),
 	    lastName: _lib.FieldTypes.field(_required2.default),
 	    sex: _lib.FieldTypes.switch('relationships', _required2.default),
@@ -16488,13 +16490,13 @@
 
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-	var _Form = __webpack_require__(103);
-
-	var _Form2 = _interopRequireDefault(_Form);
-
 	var _react = __webpack_require__(5);
 
 	var _react2 = _interopRequireDefault(_react);
+
+	var _Form = __webpack_require__(103);
+
+	var _Form2 = _interopRequireDefault(_Form);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16505,6 +16507,10 @@
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var initialValue = {
+	    firstName: 'default name'
+	};
 
 	var Forms = function (_Component) {
 	    _inherits(Forms, _Component);
@@ -16541,7 +16547,7 @@
 	                    return _react2.default.createElement(
 	                        'div',
 	                        { key: i, style: form },
-	                        _react2.default.createElement(_Form2.default, null)
+	                        _react2.default.createElement(_Form2.default, { initialValue: initialValue })
 	                    );
 	                }),
 	                _react2.default.createElement(
@@ -17108,16 +17114,15 @@
 	var logger = (0, _reduxLogger2.default)({
 	    stateTransformer: function stateTransformer(state) {
 	        return Object.keys(state.states).reduce(function (acc, key) {
-	            var newAcc = {};
 	            var _state$states$key = state.states[key];
 	            var localState = _state$states$key.state;
 
 	            var rest = _objectWithoutProperties(_state$states$key, ['state']);
 
-	            newAcc[key] = _extends({
+	            acc[key] = _extends({
 	                state: localState.toJS()
 	            }, rest);
-	            return newAcc;
+	            return acc;
 	        }, {});
 	    }
 	});
@@ -17141,7 +17146,7 @@
 	var _mapType2 = _interopRequireDefault(_mapType);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
 	var composeFields = function composeFields() {
@@ -17150,10 +17155,10 @@
 	    var state = arguments[2];
 	    var props = arguments[3];
 	    var fieldPath = arguments.length <= 4 || arguments[4] === undefined ? [] : arguments[4];
-	    return (0, _mapType2["default"])(fields)(fieldPath, fieldsPath, state, props);
+	    return (0, _mapType2.default)(fields)(fieldPath, fieldsPath, state, props);
 	};
 
-	exports["default"] = composeFields;
+	exports.default = composeFields;
 
 /***/ },
 /* 116 */
@@ -17212,7 +17217,7 @@
 	var _reducer2 = _interopRequireDefault(_reducer);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
 	function _interopRequireWildcard(obj) {
@@ -17223,7 +17228,7 @@
 	            for (var key in obj) {
 	                if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key];
 	            }
-	        }newObj["default"] = obj;return newObj;
+	        }newObj.default = obj;return newObj;
 	    }
 	}
 
@@ -17260,13 +17265,13 @@
 	    var state = _inst$props.state;
 	    var submit = _inst$props.submit;
 
-	    var composeResult = (0, _composeFields2["default"])(fields, ['fields'], state, inst.props);
+	    var composeResult = (0, _composeFields2.default)(fields, ['fields'], state, inst.props);
 	    var formFields = composeResult.get('map').toJS();
 	    var valid = composeResult.get('valid');
 	    var submitting = state.get('submitting');
 	    var submitAllowed = !submitting && valid;
 	    var getValues = function getValues() {
-	        return (0, _extractValues2["default"])(composeResult.get('map'));
+	        return (0, _extractValues2.default)(composeResult.get('map'));
 	    };
 	    var handleSubmit = function handleSubmit(sendValues) {
 	        return submit(sendValues(getValues()));
@@ -17305,18 +17310,18 @@
 	            }, {
 	                key: 'render',
 	                value: function render() {
-	                    return _react2["default"].createElement(Target, createFormProps(fields, this));
+	                    return _react2.default.createElement(Target, createFormProps(fields, this));
 	                }
 	            }]);
 
 	            return ConnectForm;
 	        }(_react.Component);
 
-	        return (0, _reduxState.connectState)(mapStateToProps, mapDispatchToProps, undefined, _reducer2["default"])(ConnectForm);
+	        return (0, _reduxState.connectState)(mapStateToProps, mapDispatchToProps, undefined, _reducer2.default)(ConnectForm);
 	    };
 	};
 
-	exports["default"] = connectForm;
+	exports.default = connectForm;
 
 /***/ },
 /* 117 */
@@ -17337,7 +17342,7 @@
 	    return fields.map(extractValue).toJS();
 	};
 
-	exports["default"] = extractValues;
+	exports.default = extractValues;
 
 /***/ },
 /* 118 */
@@ -17354,7 +17359,7 @@
 	    };
 	};
 
-	exports["default"] = createAddField;
+	exports.default = createAddField;
 
 /***/ },
 /* 119 */
@@ -17371,7 +17376,7 @@
 	    };
 	};
 
-	exports["default"] = createOnBlur;
+	exports.default = createOnBlur;
 
 /***/ },
 /* 120 */
@@ -17388,12 +17393,12 @@
 	var _getValue2 = _interopRequireDefault(_getValue);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
 	var createOnChange = function createOnChange(fieldPath, change, changeCaretPosition) {
 	    return function (event, value, caretPosition) {
-	        value = typeof value === 'undefined' ? (0, _getValue2["default"])(event) : value;
+	        value = typeof value === 'undefined' ? (0, _getValue2.default)(event) : value;
 	        change(fieldPath, value);
 
 	        if (caretPosition) {
@@ -17402,7 +17407,7 @@
 	    };
 	};
 
-	exports["default"] = createOnChange;
+	exports.default = createOnChange;
 
 /***/ },
 /* 121 */
@@ -17418,7 +17423,7 @@
 	        return focus(fieldPath);
 	    };
 	};
-	exports["default"] = createOnFocus;
+	exports.default = createOnFocus;
 
 /***/ },
 /* 122 */
@@ -17435,7 +17440,7 @@
 	    };
 	};
 
-	exports["default"] = createRemoveField;
+	exports.default = createRemoveField;
 
 /***/ },
 /* 123 */
@@ -17452,17 +17457,17 @@
 	var _getValue2 = _interopRequireDefault(_getValue);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
 	var createOnChange = function createOnChange(fieldPath, switchChange, deps) {
 	    return function (event, value) {
-	        value = typeof value === 'undefined' ? (0, _getValue2["default"])(event) : value;
+	        value = typeof value === 'undefined' ? (0, _getValue2.default)(event) : value;
 	        switchChange(fieldPath, value, deps);
 	    };
 	};
 
-	exports["default"] = createOnChange;
+	exports.default = createOnChange;
 
 /***/ },
 /* 124 */
@@ -17477,7 +17482,7 @@
 	  return !!(candidate && candidate.stopPropagation && candidate.preventDefault);
 	};
 
-	exports["default"] = isEvent;
+	exports.default = isEvent;
 
 /***/ },
 /* 125 */
@@ -17506,14 +17511,14 @@
 	var _switchType2 = _interopRequireDefault(_switchType);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
-	exports["default"] = {
-	    field: _fieldType2["default"],
-	    list: _listType2["default"],
-	    map: _mapType2["default"],
-	    "switch": _switchType2["default"]
+	exports.default = {
+	    field: _fieldType2.default,
+	    list: _listType2.default,
+	    map: _mapType2.default,
+	    switch: _switchType2.default
 	};
 
 /***/ },
@@ -17547,7 +17552,7 @@
 	var _mapType2 = _interopRequireDefault(_mapType);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
 	function _toConsumableArray(arr) {
@@ -17575,7 +17580,7 @@
 	};
 
 	var listType = function listType() {
-	    var field = arguments.length <= 0 || arguments[0] === undefined ? (0, _fieldType2["default"])() : arguments[0];
+	    var field = arguments.length <= 0 || arguments[0] === undefined ? (0, _fieldType2.default)() : arguments[0];
 	    var options = arguments[1];
 	    return function (fieldPath) {
 	        var fieldsPath = arguments.length <= 1 || arguments[1] === undefined ? [] : arguments[1];
@@ -17583,12 +17588,12 @@
 	        var props = arguments.length <= 3 || arguments[3] === undefined ? {} : arguments[3];
 
 	        var listMethods = {
-	            addField: (0, _createAddField2["default"])(fieldPath, props.addField),
-	            removeField: (0, _createRemoveField2["default"])(fieldPath, props.removeField)
+	            addField: (0, _createAddField2.default)(fieldPath, props.addField),
+	            removeField: (0, _createRemoveField2.default)(fieldPath, props.removeField)
 	        };
 
 	        return (state.getIn([].concat(_toConsumableArray(fieldsPath), _toConsumableArray(fieldPath), ['list'])) || (0, _immutable.List)()).reduce(function (acc, item, index) {
-	            var listItem = ((typeof field === 'undefined' ? 'undefined' : _typeof(field)) === 'object' ? (0, _mapType2["default"])(field) : field)([].concat(_toConsumableArray(fieldPath), ['list', index]), fieldsPath, state, props);
+	            var listItem = ((typeof field === 'undefined' ? 'undefined' : _typeof(field)) === 'object' ? (0, _mapType2.default)(field) : field)([].concat(_toConsumableArray(fieldPath), ['list', index]), fieldsPath, state, props);
 
 	            return acc.setIn(['list', index], listItem).update('valid', function (v) {
 	                return v && listItem.get('valid');
@@ -17601,7 +17606,7 @@
 	    };
 	};
 
-	exports["default"] = listType;
+	exports.default = listType;
 
 /***/ },
 /* 127 */
@@ -17622,7 +17627,7 @@
 	var _fieldType2 = _interopRequireDefault(_fieldType);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
 	var switchType = function switchType() {
@@ -17631,13 +17636,13 @@
 	    return function (fieldPath, fieldsPath, state, props) {
 	        var deps = typeof dependencies === 'string' ? [dependencies] : dependencies;
 
-	        return (0, _fieldType2["default"])(options)(fieldPath, fieldsPath, state, props).merge({
-	            onChange: (0, _createSwitchOnChange2["default"])(fieldPath, props.switchChange, deps)
+	        return (0, _fieldType2.default)(options)(fieldPath, fieldsPath, state, props).merge({
+	            onChange: (0, _createSwitchOnChange2.default)(fieldPath, props.switchChange, deps)
 	        });
 	    };
 	};
 
-	exports["default"] = switchType;
+	exports.default = switchType;
 
 /***/ },
 /* 128 */
@@ -17657,14 +17662,14 @@
 	var _transformToState2 = _interopRequireDefault(_transformToState);
 
 	function _interopRequireDefault(obj) {
-	    return obj && obj.__esModule ? obj : { "default": obj };
+	    return obj && obj.__esModule ? obj : { default: obj };
 	}
 
 	var initialize = exports.initialize = function initialize(data) {
 	    return {
 	        type: _actionTypes.INITIALIZE,
 	        result: {
-	            data: (0, _transformToState2["default"])(data)
+	            data: (0, _transformToState2.default)(data)
 	        }
 	    };
 	};
@@ -17726,7 +17731,7 @@
 	        type: _actionTypes.ADD,
 	        result: {
 	            fieldPath: fieldPath,
-	            data: (0, _transformToState2["default"])(data),
+	            data: (0, _transformToState2.default)(data),
 	            index: index,
 	            focused: focused
 	        }
@@ -17778,6 +17783,10 @@
 	            return dispatch({
 	                type: _actionTypes.END_SUBMITTING
 	            });
+	        }).catch(function () {
+	            return dispatch({
+	                type: _actionTypes.END_SUBMITTING
+	            });
 	        });
 	    };
 	};
@@ -17794,7 +17803,7 @@
 
 	var _reduxState = __webpack_require__(98);
 
-	exports["default"] = _reduxState.reducer;
+	exports.default = _reduxState.reducer;
 
 /***/ },
 /* 130 */
@@ -17846,7 +17855,7 @@
 
 	                return state.updateIn(['fields'].concat(_toConsumableArray(fieldPathSkipLast)), function (st) {
 	                    return action.result.deps.reduce(function (s, dep) {
-	                        return s["delete"](dep);
+	                        return s.delete(dep);
 	                    }, st);
 	                });
 	            }
@@ -17893,7 +17902,7 @@
 	    return state;
 	};
 
-	exports["default"] = formReducer;
+	exports.default = formReducer;
 
 /***/ },
 /* 131 */
@@ -17933,7 +17942,7 @@
 	    }, mapState) : createFieldState(data);
 	};
 
-	exports["default"] = transformToState;
+	exports.default = transformToState;
 
 /***/ },
 /* 132 */
@@ -27905,10 +27914,15 @@
 	        var ReduxState = (function (_Component) {
 	            _inherits(ReduxState, _Component);
 
-	            function ReduxState() {
+	            function ReduxState(_, context) {
 	                _classCallCheck(this, ReduxState);
 
-	                return _possibleConstructorReturn(this, Object.getPrototypeOf(ReduxState).apply(this, arguments));
+	                var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReduxState).call(this));
+
+	                _this.state = {
+	                    reduxState: context.store.getState()
+	                };
+	                return _this;
 	            }
 
 	            _createClass(ReduxState, [{
@@ -27926,8 +27940,10 @@
 	                    var store = this.context.store;
 
 	                    this.unsubscribe = store.subscribe(function () {
-	                        return _this2.forceUpdate();
-	                    });
+	                        return _this2.setState({
+	                            reduxState: store.getState()
+	                        });
+	                    }, this.forceUpdate());
 	                }
 	            }, {
 	                key: 'componentWillMount',

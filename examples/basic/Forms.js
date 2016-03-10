@@ -1,5 +1,9 @@
-import Form from './Form'
 import React, {Component} from 'react'
+import Form from './Form'
+
+const initialValue = {
+    firstName: `default name`
+}
 
 class Forms extends Component {
 
@@ -22,7 +26,7 @@ class Forms extends Component {
             <div style={container}>
                 {Array(...Array(count)).map((_, i) => (
                     <div key={i} style={form}>
-                        <Form />
+                        <Form initialValue={initialValue} />
                     </div>
 
                 ))}

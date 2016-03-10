@@ -4,6 +4,6 @@ import reducer from './formReducer'
 
 export {
     FieldTypes,
-    connectForm,
+    connectForm as uniform,
     reducer
 }

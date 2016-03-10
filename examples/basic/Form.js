@@ -1,4 +1,4 @@
-import {FieldTypes, connectForm} from '../../lib'
+import {FieldTypes, uniform} from '../../lib'
 
 import Input from './components/Input'
 import React from 'react'
@@ -11,22 +11,25 @@ import realManList from './fieldTypes/realManList'
 import realWomanList from './fieldTypes/realWomanList'
 import required from './fieldTypes/validations/required'
 
-const Form = ({fields, getValues, submitAllowed, handleSubmit}) => (
-    <div style={container}>
-        <div style={form}>
-            <Input placeholder="First Name" {...fields.firstName} />
-            <Input placeholder="Last Name" {...fields.lastName} />
-            <Select {...fields.sex} />
-            <Relationships {...fields} />
-            <Submit submitAllowed={submitAllowed} handleSubmit={handleSubmit}/>
-        </div>
-        <div style={values}>
-            <Values getValues={getValues}/>
-        </div>
-    </div>
-)
+const Form = ({fields, getValues, submitAllowed, handleSubmit}) => {
 
-export default connectForm({
+    return (
+        <div style={container}>
+            <div style={form}>
+                <Input placeholder="First Name" {...fields.firstName} />
+                <Input placeholder="Last Name" {...fields.lastName} />
+                <Select {...fields.sex} />
+                <Relationships {...fields} />
+                <Submit submitAllowed={submitAllowed} handleSubmit={handleSubmit}/>
+            </div>
+            <div style={values}>
+                <Values getValues={getValues}/>
+            </div>
+        </div>
+    )
+}
+
+export default uniform({
     firstName: FieldTypes.field(required),
     lastName: FieldTypes.field(required),
     sex: FieldTypes.switch(`relationships`, required),

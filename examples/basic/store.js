@@ -9,13 +9,12 @@ const reducer = combineReducers({
 const logger = createLogger({
     stateTransformer: (state) =>
         Object.keys(state.states).reduce((acc, key) => {
-            const newAcc = {}
             const {state: localState, ...rest} = state.states[ key ]
-            newAcc[ key ] = {
+            acc[ key ] = {
                 state: localState.toJS(),
                 ...rest
             }
-            return newAcc
+            return acc
         }, {})
 })
 
