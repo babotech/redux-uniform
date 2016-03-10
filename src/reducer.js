@@ -37,10 +37,10 @@ const formReducer = (state = initialState, action = {}) => {
                     .set(`valid`, action.result.value)
             ))
         case REMOVE:
-            return state.removeIn([ `fields`, ...action.result.fieldPath, action.result.index ])
+            return state.removeIn([ `fields`, ...action.result.fieldPath, `list`, action.result.index ])
         case ADD:
             {
-                state = state.updateIn([ `fields`, ...action.result.fieldPath ], (list = List()) =>
+                state = state.updateIn([ `fields`, ...action.result.fieldPath, `list` ], (list = List()) =>
                     typeof action.result.index === `undefined` ? list.push(action.result.data) : list.splice(action.result.index, 0, action.result.data))
 
                 if (action.result.focused) {

@@ -10,7 +10,7 @@ expect.extend(expectImmutable)
 
 describe(`redux-uniform`, () => {
 
-    describe(`reducer`, () => {
+    describe.only(`reducer`, () => {
 
         it(`should initialize fields`, () => {
             const data = rndoam.map()
@@ -121,9 +121,11 @@ describe(`redux-uniform`, () => {
 
             expect(reducer(fromJS({
                 fields: {
-                    foo: [
-                        rndoam.map()
-                    ]
+                    foo: {
+                        list: [
+                            rndoam.map()
+                        ]
+                    }
                 }
             }), {
                 type: actionTypes.REMOVE,
@@ -133,7 +135,9 @@ describe(`redux-uniform`, () => {
                 }
             })).toEqualImmutable(fromJS({
                 fields: {
-                    foo: []
+                    foo: {
+                        list: []
+                    }
                 }
             }))
         })
@@ -142,7 +146,9 @@ describe(`redux-uniform`, () => {
             const data = rndoam.map()
             expect(reducer(fromJS({
                 fields: {
-                    foos: []
+                    foos: {
+                        list: []
+                    }
                 }
             }), {
                 type: actionTypes.ADD,
@@ -153,9 +159,11 @@ describe(`redux-uniform`, () => {
                 }
             })).toEqualImmutable(fromJS({
                 fields: {
-                    foos: [
-                        data
-                    ]
+                    foos: {
+                        list: [
+                            data
+                        ]
+                    }
                 },
                 focusedFieldPath: [ `foos`, 0 ]
             }))
@@ -167,9 +175,11 @@ describe(`redux-uniform`, () => {
 
             expect(reducer(fromJS({
                 fields: {
-                    foos: [
-                        item1
-                    ]
+                    foos: {
+                        list: [
+                            item1
+                        ]
+                    }
                 }
             }), {
                 type: actionTypes.ADD,
@@ -181,10 +191,12 @@ describe(`redux-uniform`, () => {
                 }
             })).toEqualImmutable(fromJS({
                 fields: {
-                    foos: [
-                        item2,
-                        item1
-                    ]
+                    foos: {
+                        list: [
+                            item2,
+                            item1
+                        ]
+                    }
                 },
                 focusedFieldPath: [ `foos`, 0 ]
             }))
