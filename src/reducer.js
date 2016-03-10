@@ -59,7 +59,7 @@ const formReducer = (state = initialState, action = {}) => {
                     typeof action.result.index === `undefined` ? list.push(action.result.data) : list.splice(action.result.index, 0, action.result.data))
 
                 if (action.result.focused) {
-                    state = state.set(`focusedFieldPath`, List([ ...action.result.fieldPath,
+                    state = state.set(`focusedFieldPath`, List([ ...action.result.fieldPath, `list`,
                         typeof action.result.index === `undefined` ? state.getIn([ `fields`, ...action.result.fieldPath ]).size - 1 : action.result.index ]))
                 }
                 return state

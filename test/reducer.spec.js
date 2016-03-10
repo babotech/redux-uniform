@@ -206,7 +206,7 @@ describe(`redux-uniform`, () => {
                         ]
                     }
                 },
-                focusedFieldPath: [ `foos`, 0 ]
+                focusedFieldPath: [ `foos`, `list`, 0 ]
             }))
         })
 
@@ -239,7 +239,7 @@ describe(`redux-uniform`, () => {
                         ]
                     }
                 },
-                focusedFieldPath: [ `foos`, 0 ]
+                focusedFieldPath: [ `foos`, `list`, 0 ]
             }))
         })
 
