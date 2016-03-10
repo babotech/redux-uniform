@@ -1,9 +1,11 @@
 import React from 'react'
 
+const tab = 4
+
 const Values = ({getValues}) => (
-    <div>
-        {JSON.stringify(getValues())}
-    </div>
+    <pre>
+        {JSON.stringify(getValues(), null, tab)}
+    </pre>
 )
 
 export default Values

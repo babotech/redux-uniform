@@ -16457,12 +16457,14 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	var tab = 4;
+
 	var Values = function Values(_ref) {
 	    var getValues = _ref.getValues;
 	    return _react2.default.createElement(
-	        'div',
+	        'pre',
 	        null,
-	        JSON.stringify(getValues())
+	        JSON.stringify(getValues(), null, tab)
 	    );
 	};
 
