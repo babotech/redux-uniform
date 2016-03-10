@@ -233,6 +233,31 @@ describe(`redux-uniform`, () => {
                 done()
             }, 0)
         })
+
+        it(`should handle promise rejection`, (done) => {
+            const dispatch = expect.createSpy()
+
+            actions.submit(Promise.reject(true))(dispatch)
+
+            expect(dispatch.calls.length).toEqual(1)
+
+            expect(dispatch.calls[ 0 ].arguments).toEqual([
+                {
+                    type: actionTypes.START_SUBMITTING
+                }
+            ])
+
+            setTimeout(() => {
+                const expectedCallsCount = 2
+                expect(dispatch.calls.length).toEqual(expectedCallsCount)
+                expect(dispatch.calls[ 1 ].arguments).toEqual([
+                    {
+                        type: actionTypes.END_SUBMITTING
+                    }
+                ])
+                done()
+            }, 0)
+        })
     })
 
 })

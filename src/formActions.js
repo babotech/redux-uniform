@@ -111,8 +111,13 @@ export const submit = promise => dispatch => {
         type: START_SUBMITTING
     })
 
-    promise.then(() =>
-        dispatch({
-            type: END_SUBMITTING
-        }))
+    promise
+        .then(() =>
+            dispatch({
+                type: END_SUBMITTING
+            }))
+        .catch(() =>
+            dispatch({
+                type: END_SUBMITTING
+            }))
 }
