@@ -50,12 +50,12 @@ export default uniform({
         city: FieldTypes.field(),
         street: FieldTypes.field()
     }),
-    sex: FieldTypes.switch(`relationships`, required),
-    relationships: {
-        [form => form.getIn([ `sex`, `value` ]) === `male`]: FieldTypes.list(
+    type: FieldTypes.switch(`users`, required),
+    users: {
+        [form => form.getIn([ `type`, `value` ]) === `short`]: FieldTypes.list(
             FieldTypes.field()
         ),
-        [form => form.getIn([ `sex`, `value` ]) === `female`]: FieldTypes.list(
+        [form => form.getIn([ `type`, `value` ]) === `full`]: FieldTypes.list(
             FieldTypes.map({
                 firstName: FieldTypes.field(),
                 lastName: FieldTypes.field()

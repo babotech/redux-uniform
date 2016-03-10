@@ -2,11 +2,7 @@ import Input from '../Input'
 import React, {Component} from 'react'
 
 const Error = () => (
-    <div>OMG</div>
-)
-
-const Success = () => (
-    <div>Good girl</div>
+    <div style={error}>Only one user allowed</div>
 )
 
 const Boy = ({firstName, lastName}) => (
@@ -21,7 +17,7 @@ const initialState = {
     lastName: null
 }
 
-class Female extends Component {
+class Full extends Component {
 
     constructor() {
         super()
@@ -46,21 +42,21 @@ class Female extends Component {
 
         return (
             <div>
-                {valid ? <Success /> : <Error />}
+                {valid ? null : <Error />}
                 {list.map(({map}, i) =>
                     <Boy key={i} {...map} />
                 )}
                 <div style={form}>
                     <Input placeholder="first name" value={this.state.firstName} onChange={getOnChange(`firstName`)}/>
                     <Input placeholder="last name" value={this.state.lastName} onChange={getOnChange(`lastName`)}/>
-                    <button style={add} onClick={onClick}>Add boyfriend</button>
+                    <button style={add} onClick={onClick}>Add user</button>
                 </div>
             </div>
         )
     }
 }
 
-export default Female
+export default Full
 
 const add = {
     marginBottom: `10px`
@@ -69,4 +65,8 @@ const add = {
 const form = {
     padding: `5px`,
     border: `solid 1px grey`
+}
+
+const error = {
+    color: `#FF0000`
 }
