@@ -1,10 +1,7 @@
 import {List, Map} from 'immutable'
 
 import expect from 'expect'
-import expectImmutable from 'expect-immutable'
 import transformToState from '../src/transformToState'
-
-expect.extend(expectImmutable)
 
 describe(`redux-uniform`, () => {
 

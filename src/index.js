@@ -1,6 +1,6 @@
+import FieldTypes from './fieldCreators'
 import connectForm from './connectForm'
 import reducer from './formReducer'
-import FieldTypes from './fieldCreators'
 
 export {
     FieldTypes,

@@ -66,6 +66,22 @@ describe(`redux-uniform`, () => {
             })
         })
 
+        it(`should create switch change action`, () => {
+            const fieldPath = rndoam.array()
+            const value = rndoam.string()
+            const deps = rndoam.array()
+
+            expect(actions.switchChange(fieldPath, value, deps)).toEqual({
+                type: actionTypes.SWITCH_CHANGE,
+                result: {
+                    fieldPath,
+                    value,
+                    deps
+                }
+            })
+
+        })
+
         it(`should create validate action`, () => {
             const fieldPath = rndoam.array()
             const value = rndoam.string()

@@ -2,15 +2,12 @@ import * as actionTypes from '../src/actionTypes'
 import {Map, fromJS} from 'immutable'
 
 import expect from 'expect'
-import expectImmutable from 'expect-immutable'
 import reducer from '../src/reducer'
 import rndoam from 'rndoam/lib/withImmutable'
 
-expect.extend(expectImmutable)
-
 describe(`redux-uniform`, () => {
 
-    describe.only(`reducer`, () => {
+    describe(`reducer`, () => {
 
         it(`should initialize fields`, () => {
             const data = rndoam.map()
@@ -47,6 +44,50 @@ describe(`redux-uniform`, () => {
                     }
                 }
             }))
+        })
+
+        it(`should clear dependencies when switch changes`, () => {
+            expect(reducer(fromJS({
+                fields: {
+                    foo: {
+                        value: `bar`
+                    },
+                    bar: {
+                        value: `hate baz`
+                    }
+                }
+            }), {
+                type: actionTypes.SWITCH_CHANGE,
+                result: {
+                    fieldPath: [ `foo` ],
+                    value: `baz`,
+                    deps: [ `bar` ]
+                }
+            })).toEqualImmutable(fromJS({
+                fields: {
+                    foo: {
+                        value: `baz`
+                    }
+                }
+            }))
+        })
+
+        it(`should correctly handle switch action when map is empty`, () => {
+            expect(reducer(fromJS({}),
+                {
+                    type: actionTypes.SWITCH_CHANGE,
+                    result: {
+                        fieldPath: [ `foo` ],
+                        value: `baz`,
+                        deps: [ `bar` ]
+                    }
+                })).toEqualImmutable(fromJS({
+                    fields: {
+                        foo: {
+                            value: `baz`
+                        }
+                    }
+                }))
         })
 
         it(`should update validity value`, () => {

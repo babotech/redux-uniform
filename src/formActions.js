@@ -10,6 +10,7 @@ import {
     REMOVE,
     START_SUBMITTING,
     START_VALIDATION,
+    SWITCH_CHANGE,
     VALIDATE
 } from './actionTypes'
 
@@ -27,6 +28,15 @@ export const change = (fieldPath, value) => ({
     result: {
         fieldPath,
         value
+    }
+})
+
+export const switchChange = (fieldPath, value, deps) => ({
+    type: SWITCH_CHANGE,
+    result: {
+        fieldPath,
+        value,
+        deps
     }
 })
 

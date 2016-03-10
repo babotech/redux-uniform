@@ -10,6 +10,7 @@ import {
     REMOVE,
     START_SUBMITTING,
     START_VALIDATION,
+    SWITCH_CHANGE,
     VALIDATE
 } from './actionTypes'
 import {List, Map} from 'immutable'
@@ -27,6 +28,20 @@ const formReducer = (state = initialState, action = {}) => {
             return state.update(`fields`, fields => fields.merge(action.result.data))
         case CHANGE:
             return state.setIn([ `fields`, ...action.result.fieldPath, `value` ], action.result.value)
+        case SWITCH_CHANGE:
+            {
+                state = state.setIn([ `fields`, ...action.result.fieldPath, `value` ], action.result.value)
+
+                const fieldPathSkipLast = action
+                    .result
+                    .fieldPath
+                    .slice(0, -1)
+
+                return state.updateIn([ `fields`, ...fieldPathSkipLast ], st => action
+                    .result
+                    .deps
+                    .reduce((s, dep) => s.delete(dep), st))
+            }
         case VALIDATE:
             return state.setIn([ `fields`, ...action.result.fieldPath, `valid` ], action.result.value)
         case START_VALIDATION:
