@@ -20,7 +20,7 @@ var reduxStateExternal = {
 var config = {
     externals: {
         'react': reactExternal,
-        'react-state': reduxStateExternal
+        'redux-state': reduxStateExternal
     },
     module: {
         loaders: [
