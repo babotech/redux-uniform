@@ -284,5 +284,31 @@ describe(`redux-uniform`, () => {
             expect(passthrough.props.getValues)
                 .toExist()
         })
+        
+        it(`should pass own props`, () => {
+            const store = createStoreWithForm()
+            const ownProps = {
+                foo: `bar`
+            }
+
+            class Container extends Component {
+                render() {
+                    return <Passthrough {...this.props} />
+                }
+            }
+
+            const ContainerForm = connectForm()(Container)
+
+            const tree = TestUtils.renderIntoDocument(
+                <ProviderMock store={store}>
+                    <ContainerForm {...ownProps} />
+                </ProviderMock>
+            )
+
+            const passthrough = TestUtils.findRenderedComponentWithType(tree, Passthrough)
+
+            expect(passthrough.props.foo)
+                .toEqual(`bar`)
+        })
     })
 })

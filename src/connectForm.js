@@ -17,7 +17,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const createFormProps = (fields, inst) => {
-    const {state, submit} = inst.props
+    const {state, submit, ...restProps} = inst.props
     const composeResult = composeFields(fields, [ `fields` ], state, inst.props)
     const formFields = composeResult.get(`map`).toJS()
     const valid = composeResult.get(`valid`)
@@ -33,7 +33,8 @@ const createFormProps = (fields, inst) => {
         handleSubmit,
         submitAllowed,
         submitting,
-        valid
+        valid,
+        ...restProps
     }
 }
 
