@@ -14,8 +14,10 @@
     "build:umd": "cross-env NODE_ENV=development webpack src/index.js dist/redux-uniform.js",
     "build:umd:min": "cross-env NODE_ENV=production webpack src/index.js dist/redux-uniform.min.js",
     "build": "npm run build:lib && npm run build:examples && npm run build:umd && npm run build:umd:min && node ./prepublish",
+    "clean": "rimraf lib dist",
     "lint": "eslint src test",
     "lint:fix": "eslint --fix src test",
+    "prepublish": "npm run clean && npm run build",
     "test": "BABEL_DISABLE_CACHE=1 mocha --compilers js:babel-register --recursive --require ./test/setup.js",
     "test:cov": "babel-node node_modules/isparta/bin/isparta cover --report text --report html _mocha -- --recursive --require ./test/setup.js",
     "test:watch": "npm test -- --watch"
@@ -62,6 +64,7 @@
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
     "redux-logger": "^2.6.1",
+    "rimraf": "^2.5.2",
     "rndoam": "^0.1.0",
     "webpack": "^1.12.13"
   },
