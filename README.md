@@ -3,7 +3,7 @@
 ## Installation
 
 ```
-npm install --save redux-uniform
+npm install --save redux-state redux-uniform
 ```
 
 ## Implementation
