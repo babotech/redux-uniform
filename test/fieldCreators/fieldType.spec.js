@@ -18,7 +18,7 @@ describe(`redux-uniform`, () => {
                 createOnBlur = rndoam.noop(),
                 createOnChange = rndoam.noop(),
                 createOnFocus = rndoam.noop()
-                } = {}) => {
+            } = {}) => {
                 mockery.enable({
                     warnOnUnregistered: false,
                     useCleanCache: true
@@ -180,7 +180,7 @@ describe(`redux-uniform`, () => {
 
                 expect(validate.calls.length).toEqual(1)
 
-                const {arguments: args} = validate.calls[0]
+                const {arguments: args} = validate.calls[ 0 ]
 
                 expect(args).toEqual([ `bar` ])
             })
@@ -203,9 +203,34 @@ describe(`redux-uniform`, () => {
 
                 expect(validate.calls.length).toEqual(1)
 
-                const {arguments: args} = validate.calls[0]
+                const {arguments: args} = validate.calls[ 0 ]
 
                 expect(args).toEqual([ `bar` ])
+            })
+
+            it(`should return result of validation from the array of validation methods`, () => {
+                const fieldPath = [ `foo` ]
+                const state = Map({
+                    foo: Map({
+                        value: `bar`
+                    })
+                })
+
+                const validate1 = expect.createSpy()
+                    .andReturn(true)
+                const validate2 = expect.createSpy()
+                    .andReturn(false)
+                const validate3 = expect.createSpy()
+                    .andReturn(true)
+
+                const field = fieldType([ validate1, validate2, validate3 ])
+
+                expect(field(fieldPath, undefined, state).get(`valid`))
+                    .toBeFalsy()
+
+                expect(validate1.calls.length).toEqual(1)
+                expect(validate2.calls.length).toEqual(1)
+                expect(validate3.calls.length).toEqual(0)
             })
 
             it(`should add onChange handler`, () => {
@@ -230,7 +255,7 @@ describe(`redux-uniform`, () => {
                 expect(createOnChangeSpy.calls.length)
                     .toEqual(1)
 
-                const {arguments: args} = createOnChangeSpy.calls[0]
+                const {arguments: args} = createOnChangeSpy.calls[ 0 ]
                 expect(args).toEqual(
                     [ fieldPath, props.change, props.changeCaretPosition ]
                 )
@@ -257,7 +282,7 @@ describe(`redux-uniform`, () => {
                 expect(createOnBlurSpy.calls.length)
                     .toEqual(1)
 
-                const {arguments: args} = createOnBlurSpy.calls[0]
+                const {arguments: args} = createOnBlurSpy.calls[ 0 ]
                 expect(args).toEqual(
                     [ props.blur ]
                 )
@@ -283,7 +308,7 @@ describe(`redux-uniform`, () => {
                 expect(createOnFocusSpy.calls.length)
                     .toEqual(1)
 
-                const {arguments: args} = createOnFocusSpy.calls[0]
+                const {arguments: args} = createOnFocusSpy.calls[ 0 ]
                 expect(args).toEqual(
                     [ fieldPath, props.focus ]
                 )

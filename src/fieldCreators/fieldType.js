@@ -14,14 +14,18 @@ const field = Map({
 })
 
 const validate = (options, value) => {
-    if(typeof options === `function`) {
-        const execValidate = options
+    const execValidate = options && options.validate ? options.validate : options
 
+    if (typeof execValidate === `function`) {
         return execValidate(value)
-    } else if(options && options.validate) {
-        return options.validate(value)
+    } else if (Array.isArray(execValidate)) {
+        for (const exec of execValidate) {
+            const result = exec(value)
+            if (result !== true) {
+                return result
+            }
+        }
     }
-
     return true
 }
 
