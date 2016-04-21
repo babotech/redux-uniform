@@ -32,7 +32,11 @@ const mapType = fields => (fieldPath, fieldsPath, state, props) =>
             const field = fieldCreator([ ...fieldPath, `map`, key ], fieldsPath, state, props)
             return acc
                 .setIn([ `map`, key ], field)
-                .update(`valid`, v => v && field.get(`valid`))
+                .update(`valid`, v => {
+                    const valid = v && field.get(`valid`)
+
+                    return typeof valid === `boolean` && valid
+                })
         }, map)
 
 export default mapType

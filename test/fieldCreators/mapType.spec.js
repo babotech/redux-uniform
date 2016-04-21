@@ -50,7 +50,29 @@ describe(`redux-uniform`, () => {
             const result = mapType(fields)(fieldPaths, undefined, state)
             expect(result.get(`valid`)).toBeFalsy()
         })
+        
+        it(`should invalidate from if validator return not boolean`, () => {
+            const validate = expect
+                .createSpy()
+                .andReturn({})
 
+            const fields = {
+                foo: fieldType(validate)
+            }
+
+            const fieldPaths = [ `fields` ]
+            const state = Map({
+                maps: Map({
+                    foo: Map({
+                        value: `bar`
+                    })
+                })
+            })
+
+            const result = mapType(fields)(fieldPaths, undefined, state)
+            expect(result.get(`valid`)).toBeFalsy()
+        })
+        
         it(`should do switch between field types`, () => {
             const fields = {
                 type: fieldType(),
