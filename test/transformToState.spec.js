@@ -119,5 +119,97 @@ describe(`redux-uniform`, () => {
                     validating: false
                 }))
         })
+
+        it(`should transform Map`, () => {
+            const data = Map({
+                foo: `bar`
+            })
+
+            expect(transformToState(data))
+                .toEqualImmutable(Map({
+                    map: Map({
+                        foo: Map({
+                            value: `bar`,
+                            initial: `bar`,
+                            validating: false
+                        })
+                    })
+                }))
+        })
+
+        it(`should transform list`, () => {
+            const data = Map({
+                foos: List([
+                    `foo`
+                ])
+            })
+
+            expect(transformToState(data))
+                .toEqualImmutable(Map({
+                    map: Map({
+                        foos: Map({
+                            list: List([
+                                Map({
+                                    value: `foo`,
+                                    initial: `foo`,
+                                    validating: false
+                                })
+                            ])
+                        })
+                    })
+                }))
+        })
+
+        it(`should transform collection`, () => {
+            const data = Map({
+                foos: List([
+                    Map({
+                        foo: `bar`
+                    })
+                ])
+            })
+
+            expect(transformToState(data))
+                .toEqualImmutable(Map({
+                    map: Map({
+                        foos: Map({
+                            list: List([
+                                Map({
+                                    map: Map({
+                                        foo: Map({
+                                            initial: `bar`,
+                                            value: `bar`,
+                                            validating: false
+                                        })
+                                    })
+                                })
+                            ])
+                        })
+                    })
+                }))
+        })
+
+        it(`should transform deep object`, () => {
+            const data = Map({
+                foo: Map({
+                    bar: `baz`
+                })
+            })
+
+            expect(transformToState(data))
+                .toEqualImmutable(Map({
+                    map: Map({
+                        foo: Map({
+                            map: Map({
+                                bar: Map({
+                                    initial: `baz`,
+                                    value: `baz`,
+                                    validating: false
+                                })
+                            })
+                        })
+                    })
+                }))
+        })
     })
 })
