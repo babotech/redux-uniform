@@ -51,7 +51,7 @@ const connectForm = fields => Target => {
         }
     }
 
-    return connectState(mapStateToProps, mapDispatchToProps, undefined, reducer)(ConnectForm)
+    return connectState(mapStateToProps, mapDispatchToProps, undefined, reducer, false)(ConnectForm)
 }
 
 export default connectForm

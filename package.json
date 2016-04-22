@@ -64,12 +64,12 @@
     "react-redux": "^4.4.0",
     "redux": "^3.3.1",
     "redux-logger": "^2.6.1",
-    "redux-state": "0.3.1",
     "rimraf": "^2.5.2",
     "rndoam": "^0.1.0",
     "webpack": "^1.12.13"
   },
   "dependencies": {
-    "immutable": "^3.7.6"
+    "immutable": "^3.7.6",
+    "redux-state": "^0.4.0"
   }
 }
