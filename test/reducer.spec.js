@@ -13,14 +13,16 @@ describe(`redux-uniform`, () => {
             const data = rndoam.map()
 
             expect(reducer(fromJS({
-                fields: {}
+                fields: {},
+                initialized: false
             }), {
                 type: actionTypes.INITIALIZE,
                 result: {
                     data
                 }
             })).toEqualImmutable(Map({
-                fields: data
+                fields: data,
+                initialized: true
             }))
         })
 

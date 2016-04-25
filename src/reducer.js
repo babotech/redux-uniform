@@ -16,6 +16,7 @@ import {
 import {List, Map} from 'immutable'
 
 const initialState = Map({
+    initialized: false,
     fields: Map(),
     focusedFieldPath: List(),
     caretPosition: List(),
@@ -25,7 +26,9 @@ const initialState = Map({
 const formReducer = (state = initialState, action = {}) => {
     switch (action.type) {
         case INITIALIZE:
-            return state.update(`fields`, fields => fields.merge(action.result.data))
+            return state.withMutations(s => 
+                s.update(`fields`, fields => fields.merge(action.result.data))
+                    .set(`initialized`, true))
         case CHANGE:
             return state.setIn([ `fields`, ...action.result.fieldPath, `value` ], action.result.value)
         case SWITCH_CHANGE:

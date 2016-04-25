@@ -14,7 +14,9 @@ describe(`redux-uniform`, () => {
 
     describe(`connectForm`, () => {
 
-        const createStoreWithForm = (form = Map()) => createStore(() => ({
+        const createStoreWithForm = (form = Map({
+            initialized: true
+        })) => createStore(() => ({
             states: {
                 form: {
                     state: form
@@ -60,6 +62,32 @@ describe(`redux-uniform`, () => {
 
             return mockedConnectForm
         }
+
+        it(`should render nothing if component hasn't been initialized`, () => {
+            const store = createStoreWithForm(
+                Map({
+                    initialized: false
+                })
+            )
+
+            class Container extends Component {
+                render() {
+                    return <Passthrough {...this.props} />
+                }
+            }
+
+            const ContainerForm = connectForm()(Container)
+
+            const tree = TestUtils.renderIntoDocument(
+                <ProviderMock store={store}>
+                    <ContainerForm />
+                </ProviderMock>
+            )
+
+            const result = TestUtils.scryRenderedComponentsWithType(tree, Passthrough)
+
+            expect(result.length).toEqual(0)
+        })
 
         it(`should provide fields property into a wrapped component`, () => {
 
@@ -167,7 +195,8 @@ describe(`redux-uniform`, () => {
         it(`should provide submitting property into a wrapped component`, () => {
 
             const store = createStoreWithForm(Map({
-                submitting: true
+                submitting: true,
+                initialized: true
             }))
 
             class Container extends Component {
@@ -239,7 +268,8 @@ describe(`redux-uniform`, () => {
         it(`should provide submitting property into a wrapped component`, () => {
 
             const store = createStoreWithForm(Map({
-                submitting: true
+                submitting: true,
+                initialized: true
             }))
 
             class Container extends Component {
@@ -284,7 +314,7 @@ describe(`redux-uniform`, () => {
             expect(passthrough.props.getValues)
                 .toExist()
         })
-        
+
         it(`should pass own props`, () => {
             const store = createStoreWithForm()
             const ownProps = {

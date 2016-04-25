@@ -47,7 +47,16 @@ const connectForm = fields => Target => {
         }
 
         render() {
-            return <Target {...createFormProps(fields, this)} />
+            if (
+                this
+                    .props
+                    .state
+                    .get(`initialized`)
+            ) {
+                return <Target {...createFormProps(fields, this)} />
+            }
+
+            return null
         }
     }
 
