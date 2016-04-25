@@ -17569,7 +17569,11 @@
 	            }, {
 	                key: 'render',
 	                value: function render() {
-	                    return _react2.default.createElement(Target, createFormProps(fields, this));
+	                    if (this.props.state.get('initialized')) {
+	                        return _react2.default.createElement(Target, createFormProps(fields, this));
+	                    }
+
+	                    return null;
 	                }
 	            }]);
 
@@ -18089,6 +18093,7 @@
 	}
 
 	var initialState = (0, _immutable.Map)({
+	    initialized: false,
 	    fields: (0, _immutable.Map)(),
 	    focusedFieldPath: (0, _immutable.List)(),
 	    caretPosition: (0, _immutable.List)(),
@@ -18101,8 +18106,10 @@
 
 	    switch (action.type) {
 	        case _actionTypes.INITIALIZE:
-	            return state.update('fields', function (fields) {
-	                return fields.merge(action.result.data);
+	            return state.withMutations(function (s) {
+	                return s.update('fields', function (fields) {
+	                    return fields.merge(action.result.data);
+	                }).set('initialized', true);
 	            });
 	        case _actionTypes.CHANGE:
 	            return state.setIn(['fields'].concat(_toConsumableArray(action.result.fieldPath), ['value']), action.result.value);
